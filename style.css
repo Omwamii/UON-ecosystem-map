@@ -1,0 +1,28 @@
+html{
+    box-sizing: border-box;
+    font-size: 100%;
+}
+
+*, *::before, *::after{
+    box-sizing: inherit;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #fff;
+}
+
+#map{
+    height: 60vh;
+}
+
+h1{
+    font-family: 'Rubik Iso', cursive;
+    text-align: center;
+    font-size: 2rem;
+}
+.gm-style-iw-d{
+    color: #0000;
+}
