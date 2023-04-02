@@ -26,6 +26,8 @@ function initMap() {
     marker.addListener("click", () => {
       infowindow.open(map, marker);
     })
+
+    
   }
  
   window.initMap = initMap;
