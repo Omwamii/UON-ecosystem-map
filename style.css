@@ -11,7 +11,7 @@ body{
     margin: 0;
     padding: 0;
     background-color: #000000;
-    color: #fff;
+    color: #0000;
 }
 
 #map{
@@ -22,7 +22,4 @@ h1{
     font-family: 'Rubik Iso', cursive;
     text-align: center;
     font-size: 2rem;
-}
-.gm-style-iw-d{
-    color: #0000;
 }
