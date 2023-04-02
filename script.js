@@ -477,8 +477,9 @@ function initMap() {
   });
 
   //marker for Detergent selection unit sales office
-  const deter = new google.maps.Marker({
-    position: { lat: -1.273284660069437, lng: 36.80680679859551 },
+  // not showing
+  const deterg = new google.maps.Marker({
+    position: { lat: -1.2733083679815116, lng: 36.80679881970572 },
     map,
     animation: google.maps.Animation.DROP,
     title: "Detergent Selection unit sales office",
@@ -490,8 +491,8 @@ function initMap() {
   const deter_info = new google.maps.InfoWindow({
     content: "Detergent",
   });
-  deter.addListener("click", () => {
-    deter_info.open(map, deter);
+  deterg.addListener("click", () => {
+    deter_info.open(map, deterg);
   });
 }
 
