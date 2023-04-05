@@ -1,29 +1,11 @@
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     mapId: "6aba552fb22c25cd",
-    center: { lat: -1.2797696694122846, lng: 36.81628485857397 },
+    center: { lat:-1.2733869182435806, lng: 36.80609048184484 },
     zoom: 18,
     mapTypeControl: false,
     fullscreenControl: false,
     streetViewControl: false,
-  });
-
-  //marker for main campus tower
-  const main_campus = new google.maps.Marker({
-    position: { lat: -1.279359726655597, lng: 36.816361321930266 },
-    map,
-    animation: google.maps.Animation.DROP, //icons drop when map loads
-    title: "UoN towers",
-    icon: {
-      url: "building-tower.png",
-      scaledSize: new google.maps.Size(38, 31),
-    },
-  });
-  const infowindow = new google.maps.InfoWindow({
-    content: "University of Nairobi Tower",
-  });
-  main_campus.addListener("click", () => {
-    infowindow.open(map, main_campus);
   });
 
   // marker for department of computing
@@ -69,7 +51,7 @@ function initMap() {
     animation: google.maps.Animation.DROP,
     title: "Examination center",
     icon: {
-      url: "test.png",
+      url: "inspector.png",
       scaledSize: new google.maps.Size(33, 31),
     },
   });
@@ -105,7 +87,7 @@ function initMap() {
     animation: google.maps.Animation.DROP,
     title: "Chemistry department",
     icon: {
-      url: "chem.png",
+      url: "chemistry.png",
       scaledSize: new google.maps.Size(33, 31),
     },
   });
@@ -132,24 +114,6 @@ function initMap() {
   });
   chiromo_lib.addListener("click", () => {
     chiromoLib_info.open(map, chiromo_lib);
-  });
-
-  //marker for jomo kenyatta main campus lib
-  const main_lib = new google.maps.Marker({
-    position: { lat: -1.280174244416643, lng: 36.81586243105648 },
-    map,
-    animation: google.maps.Animation.DROP,
-    title: "Jomo kenyatta Memorial library",
-    icon: {
-      url: "library.png",
-      scaledSize: new google.maps.Size(33, 31),
-    },
-  });
-  const mainLib_info = new google.maps.InfoWindow({
-    content: "Jomo Kenyatta Memorial library",
-  });
-  main_lib.addListener("click", () => {
-    mainLib_info.open(map, main_lib);
   });
 
   //marker for chiromo_lib parking
@@ -242,24 +206,6 @@ function initMap() {
     anatL_info.open(map, anat_lecture);
   });
 
-  //marker for dpt of veterinary anatomy & physiology
-  const vet_dpt = new google.maps.Marker({
-    position: { lat: -1.2734389119402576, lng: 36.805149796432985 },
-    map,
-    animation: google.maps.Animation.DROP,
-    title: "Department of veterinary anatomy & physiology",
-    icon: {
-      url: "vet.png",
-      scaledSize: new google.maps.Size(33, 31),
-    },
-  });
-  const vetDpt_info = new google.maps.InfoWindow({
-    content: "Vet dpt",
-  });
-  vet_dpt.addListener("click", () => {
-    vetDpt_info.open(map, vet_dpt);
-  });
-
   //marker for physiology lab
   const phys_lab = new google.maps.Marker({
     position: { lat: -1.2734053926086755, lng: 36.80522087496523 },
@@ -303,7 +249,7 @@ function initMap() {
     animation: google.maps.Animation.DROP,
     title: "Department of Biochemistry",
     icon: {
-      url: "biochemistry.png",
+      url: "biochem.png",
       scaledSize: new google.maps.Size(33, 31),
     },
   });
@@ -321,7 +267,7 @@ function initMap() {
     animation: google.maps.Animation.DROP,
     title: "Assistant Dean's office",
     icon: {
-      url: "office.png",
+      url: "desk.png",
       scaledSize: new google.maps.Size(33, 31),
     },
   });
@@ -375,7 +321,7 @@ function initMap() {
     animation: google.maps.Animation.DROP,
     title: "Center of Biotechnology and bioinformatics",
     icon: {
-      url: "biochemistry.png",
+      url: "biochem.png",
       scaledSize: new google.maps.Size(33, 31),
     },
   });
@@ -474,25 +420,6 @@ function initMap() {
   });
   agric_lab.addListener("click", () => {
     agric_info.open(map, agric_lab);
-  });
-
-  //marker for Detergent selection unit sales office
-  // not showing
-  const deterg = new google.maps.Marker({
-    position: { lat: -1.2733083679815116, lng: 36.80679881970572 },
-    map,
-    animation: google.maps.Animation.DROP,
-    title: "Detergent Selection unit sales office",
-    icon: {
-      url: "detergent.png",
-      scaledSize: new google.maps.Size(33, 31),
-    },
-  });
-  const deter_info = new google.maps.InfoWindow({
-    content: "Detergent",
-  });
-  deterg.addListener("click", () => {
-    deter_info.open(map, deterg);
   });
 }
 
