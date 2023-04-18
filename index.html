@@ -12,11 +12,16 @@
 <link rel="stylesheet" href="style.css">
 <script src="script.js"></script>
 </head>
+<!--<input id="pac-input" class="controls" type="text" placeholder="Search"/>-->
 <body>
     <!-- <h1>Ecosystem</h1>-->
     <div id="map"></div>
+    <form id="search" onsubmit="searchLocation()">
+        <input type="text" autocomplete="off" autofocus name="q" id="input" placeholder=" Search">
+        <button type="submit">Search</button>
+    </form>
     <script async defer src="https://maps.googleapis.com/maps/api/js?
-    key=&callback=initMap">
+    key=AIzaSyAsBxu22KKv5TjY8daYJRwGIznmCA1zT2Q&callback=initMap">
     </script>
 </body>
 </html>

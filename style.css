@@ -15,7 +15,9 @@ body{
 }
 
 #map{
+    width: 100%;
     height: 100vh;
+    position: relative;
 }
 
 h1{
@@ -23,3 +25,15 @@ h1{
     text-align: center;
     font-size: 2rem;
 }
+#search{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 999; /* Set higher z-index to make it float over the map */
+  border-radius: 2px;
+  width: 200px;
+  height: 30px;
+  display: flex;
+}
+
+
