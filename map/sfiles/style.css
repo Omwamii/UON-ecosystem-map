@@ -1,0 +1,48 @@
+html{
+    box-sizing: border-box;
+    font-size: 100%;
+}
+
+*, *::before, *::after{
+    box-sizing: inherit;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #0000;
+}
+
+#map{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+h1{
+    font-family: 'Rubik Iso', cursive;
+    text-align: center;
+    font-size: 2rem;
+}
+#search{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 999; /* Set higher z-index to make it float over the map */
+  border-radius: 2px;
+  width: 200px;
+  height: 30px;
+  display: flex;
+}
+.marker{
+  position: absolute;
+  width: 30px; /* Adjust the marker size as needed */
+  height: 30px;
+  background-image: url(''); /* Add the path or URL of the custom PNG file */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  }
