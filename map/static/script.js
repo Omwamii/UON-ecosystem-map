@@ -1,6 +1,20 @@
-// Define variables for map and markers
 let map, customMarker;
 var mapLocations;
+
+// handle submission
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("search")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+      const query = document.getElementById("query-input").value;
+      searchLocation(query);
+
+      // clear input area after submission
+      document.getElementById("query-input").value = "";
+    });
+});
+
 // Initialize the map
 function initMap() {
   // Set default center and zoom level
@@ -18,17 +32,8 @@ function initMap() {
   });
   logJSONData();
 }
-// handle submission
-document.addEventListener("DOMContentLoaded", function () {
-  document
-    .getElementById("search")
-    .addEventListener("submit", function (event) {
-      event.preventDefault();
-      const query = document.getElementById("query-input").value;
-      searchLocation(query);
-    });
-});
 
+// display custom locations from model with custom icons as markers
 async function logJSONData() {
   const response = await fetch("/display/");
   mapLocations = await response.json();
@@ -59,7 +64,12 @@ async function logJSONData() {
   });
 }
 
+// search for location in db when queried
 async function searchLocation(query) {
+  if (query.toLowerCase() == "locate"){
+    getCurrentLocation();
+    return;
+  }
   var match = mapLocations.find(function (item) {
     return item.name.toLowerCase().includes(query.toLowerCase());
   });
@@ -88,11 +98,16 @@ async function searchLocation(query) {
     map.panTo(position);
     map.setZoom(18);
 
+    var coords = location.latitude + ", " + location.longitude;
+
+    // display directions on map
+    displayDirectionsOnMap(coords);
+
     // Add listener to allowing copying coordinates
     customMarker.addListener("click", function () {
-      var position = customMarker.getPosition(); // Get the marker position
-      var lat = position.lat(); // Get the latitude
-      var lng = position.lng(); // Get the longitude
+      var position = customMarker.getPosition(); // Get marker position
+      var lat = position.lat(); // Get latitude
+      var lng = position.lng(); // Get longitude
       var coordinates = lat + ", " + lng;
       displayAndCopyCoordinates(coordinates);
     });
@@ -103,8 +118,9 @@ async function searchLocation(query) {
 
     console.log(jsonData); // log data for debugging
     if (jsonData.results && jsonData.results.length > 0) {
+      // check if query is a necessity (more than one options)
       if (query.toLowerCase() == "parking" || query.toLowerCase() == "toilet") {
-        const location = jsonData.results; // get every location to display (more than one marker)
+        const location = jsonData.results;
 
         location.forEach((location) => {
           const position = {
@@ -127,9 +143,11 @@ async function searchLocation(query) {
             var coordinates = lat + ", " + lng;
             displayAndCopyCoordinates(coordinates);
           });
-          map.panTo(position);
+
+          map.panTo(position); // necessary ?
           map.setZoom(18);
         });
+        // display message to user to select one point to get direction
       } else {
         const location = jsonData.results[0]; // Retrieve the first matching location
 
@@ -152,6 +170,10 @@ async function searchLocation(query) {
         map.panTo(position);
         map.setZoom(18);
 
+        var coords = location.latitude + ", " + location.longitude;
+
+        displayDirectionsOnMap(coords);
+
         // add listener for copying coordinates if clicked
         customMarker.addListener("click", function () {
           var position = customMarker.getPosition(); // Get marker position
@@ -173,7 +195,7 @@ async function searchLocation(query) {
       geocoder.geocode({ address: query }, (results, status) => {
         if (status === "OK") {
           const position = results[0].geometry.location;
-          // Remove previous custom marker if any
+
           if (customMarker) {
             customMarker.setMap(null);
           }
@@ -185,10 +207,12 @@ async function searchLocation(query) {
           map.panTo(position);
           map.setZoom(18);
 
+          displayDirectionsOnMap(position);
+
           customMarker.addListener("click", function () {
-            var position = customMarker.getPosition(); // Get marker position
-            var lat = position.lat(); // Get the latitude
-            var lng = position.lng(); // Get the longitude
+            var position = customMarker.getPosition(); 
+            var lat = position.lat(); 
+            var lng = position.lng();
             var coordinates = lat + ", " + lng;
             displayAndCopyCoordinates(coordinates);
           });
@@ -211,7 +235,7 @@ async function searchLocation(query) {
   }
 }
 
-// Function to display coordinates and copy to clipboard
+//Display coordinates and copy to clipboard
 function displayAndCopyCoordinates(coordinates) {
   console.log(coordinates);
 
@@ -235,7 +259,7 @@ function displayAndCopyCoordinates(coordinates) {
     });
 }
 
-// Function to display office location information using a toast notification
+// Display office location information using a toast
 function displayOfficeLocation(location) {
   const message = "Office is on " + location.floor + " floor";
 
@@ -245,4 +269,94 @@ function displayOfficeLocation(location) {
     gravity: "top",
     position: "center",
   }).showToast();
+}
+
+function showDistance(distance){
+  const message = "The destination is " + distance + " away";
+
+  Toastify({
+    text: message,
+    duration: 5000,
+    gravity: "top",
+    position: "center",
+  }).showToast();
+}
+
+var directionsRenderer;
+
+function displayDirectionsOnMap(destination) {
+  // Get the user's current location
+
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      var userLatLng = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+
+      // Create a DirectionsService object
+      var directionsService = new google.maps.DirectionsService();
+
+      // Remove previous directions and markers if they exist
+      if (directionsRenderer) {
+        directionsRenderer.setMap(null); // Remove from the map
+        directionsRenderer = null; // Reset the directionsRenderer
+      }
+
+      // Create a new DirectionsRenderer object
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map, // Set the map for rendering directions
+      });
+
+      // Configure the request for directions
+      var request = {
+        origin: userLatLng,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING,
+      };
+
+      // Get the directions from the DirectionsService
+      directionsService.route(request, function (response, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          // Render the directions on the map
+          directionsRenderer.setDirections(response);
+
+          // Get the distance from the response
+          var distance = response.routes[0].legs[0].distance.text;
+
+          showDistance(distance);
+
+          console.log("Distance: " + distance); // log for debugging
+        } else {
+          console.error("Error retrieving directions: " + status);
+        }
+      });
+    },
+    function (error) {
+      console.error("Error getting user's location: " + error.message);
+    }
+  );
+}
+
+// get the user current location
+function getCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        var coords = latitude + ", " + longitude;
+
+        // Copy coordinates to clipboard
+        displayAndCopyCoordinates(coords);
+      },
+      function (error) {
+        console.error("Error getting user's location: " + error.message);
+      },
+      { enableHighAccuracy: true } // Enable high accuracy mode
+    );
+  } else {
+    console.error("Geolocation is not supported by this browser.");
+  }
 }
