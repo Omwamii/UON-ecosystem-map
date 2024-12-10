@@ -1,8 +1,12 @@
 ******Ecosystem@UoN******
-
-This is a website that captures the ecosystem of the University of Nairobi
- 		:places, routes, departments, amenities and more ...
-
-along with more functionalities such as 'Locate a comrade :)'
-
-**Under construction**
+- Locating amenities and offices has been a challenge for anyone new at a place, especially the univeristy 🙃.
+- This project maps the lecturers' offices, facilities such as labs, lecture halls and even washrooms, helping students to easily navigate the University of Nairobi.
+- A small overview of the features:
+     - You can search for the location of offices by typing the lecturers' name or department or both for accuracy.
+     - You can locate facilities by searching for them.
+     - You can find out the accurate distance from your current location to the destination you intend to reach
+     - You can find out on which floor an amenity or office is located
+     - By sharing locations, you can be able to locate another comrade 😄
+     - And some other more cool features
+ - Being a beginner learning Javascript and Django, this was a fun project to experiment on
+ - Stack: Django, HTML, CSS, Google Maps API, Google Directions API
